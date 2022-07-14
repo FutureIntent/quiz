@@ -1,4 +1,4 @@
-package com.example.quiz.repo;
+package com.example.quiz.repository;
 
 import com.example.quiz.dto.Options;
 import org.springframework.data.repository.CrudRepository;
