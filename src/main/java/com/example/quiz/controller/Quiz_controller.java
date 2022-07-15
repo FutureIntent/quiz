@@ -1,5 +1,6 @@
 package com.example.quiz.controller;
 
+import com.example.quiz.response.Options_response;
 import com.example.quiz.response.Questions_response;
 import com.example.quiz.response.Quiz_response;
 import com.example.quiz.service.Quiz_service;
@@ -29,6 +30,14 @@ public class Quiz_controller {
     public ResponseEntity<Questions_response> get_questions(@PathVariable Integer quiz_id){
 
         ResponseEntity<Questions_response> response = quizService.getQuestions(quiz_id);
+
+        return response;
+    }
+
+    @GetMapping(value="/options/{question_id}")
+    public ResponseEntity<Options_response> get_options(@PathVariable Integer question_id){
+
+        ResponseEntity<Options_response> response = quizService.getOptions(question_id);
 
         return response;
     }
