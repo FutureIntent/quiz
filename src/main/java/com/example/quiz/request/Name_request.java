@@ -14,9 +14,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Name_request {
 
-    @NotBlank
-    @NotEmpty
-    @NotNull
-    @Length(min = 1, max = 50)
+    @NotNull(message = "Name must not be null")
+    @NotEmpty(message = "Name must not be empty")
+    @NotBlank(message = "Name must not be blank")
+    @Length(min = 1, max = 50, message = "Name length must be 1 to 50 characters long")
     private String name;
 }

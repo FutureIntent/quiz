@@ -40,7 +40,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Quiz_response("Unable to retrieve tests", tests), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Quiz_response("Success", tests), HttpStatus.OK);
+        return new ResponseEntity<>(new Quiz_response(null, tests), HttpStatus.OK);
     }
 
     public ResponseEntity<Questions_response> getQuestions(int quiz_id){
@@ -53,7 +53,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Questions_response("Unable to retrieve questions", questions), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Questions_response(Integer.toString(quiz_id),questions),HttpStatus.OK);
+        return new ResponseEntity<>(new Questions_response(null, questions),HttpStatus.OK);
     }
 
     public ResponseEntity<Options_response> getOptions(int question_id){
@@ -66,7 +66,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Options_response("Unable to retrieve options", options), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Options_response("Success", options), HttpStatus.OK);
+        return new ResponseEntity<>(new Options_response(null, options), HttpStatus.OK);
     }
 
 }
