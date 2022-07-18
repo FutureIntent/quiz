@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface Questions_repo extends CrudRepository<Questions, Long> {
     @Query(value = "SELECT * from quiz.questions qe WHERE qe.quiz_id = :quiz_id", nativeQuery = true)
-    List<Questions> findQuizQuestions(@Param("quiz_id") int quiz_id);
+    List<Questions> findQuizQuestions(@Param("quiz_id") Long quiz_id);
 }

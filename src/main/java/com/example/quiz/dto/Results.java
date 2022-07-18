@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 @ToString
 @Getter
@@ -32,5 +33,10 @@ public class Results {
     @Min(0)
     @Max(100)
     @Column(name = "result", updatable = false, unique = false, nullable = false)
-    private byte result;
+    private float result;
+
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_date", updatable = false, nullable = false)
+    private Date creation_date;
 }

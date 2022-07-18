@@ -1,9 +1,11 @@
 package com.example.quiz.controller;
 
 import com.example.quiz.request.Name_request;
+import com.example.quiz.request.SubmitTest_request;
 import com.example.quiz.response.Options_response;
 import com.example.quiz.response.Questions_response;
 import com.example.quiz.response.Quiz_response;
+import com.example.quiz.response.SubmitTest_response;
 import com.example.quiz.service.Quiz_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class Quiz_controller {
     }
 
     @GetMapping(value="/questions/{quiz_id}")
-    public ResponseEntity<Questions_response> get_questions(@PathVariable Integer quiz_id){
+    public ResponseEntity<Questions_response> get_questions(@PathVariable Long quiz_id){
 
         ResponseEntity<Questions_response> response = quizService.getQuestions(quiz_id);
 
@@ -37,7 +39,7 @@ public class Quiz_controller {
     }
 
     @GetMapping(value="/options/{question_id}")
-    public ResponseEntity<Options_response> get_options(@PathVariable Integer question_id){
+    public ResponseEntity<Options_response> get_options(@PathVariable Long question_id){
 
         ResponseEntity<Options_response> response = quizService.getOptions(question_id);
 
@@ -48,5 +50,13 @@ public class Quiz_controller {
     public ResponseEntity get_name(@Valid @RequestBody Name_request name){
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/submitTest")
+    public ResponseEntity<SubmitTest_response> submit_test(@Valid @RequestBody SubmitTest_request body){
+
+        ResponseEntity<SubmitTest_response> response = quizService.submitTest(body);
+
+        return response;
     }
 }
