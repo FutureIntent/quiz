@@ -47,7 +47,7 @@ public class Quiz_controller {
     }
 
     @PostMapping(value = "/getName")
-    public ResponseEntity get_name(@Valid @RequestBody Name_request name){
+    public ResponseEntity get_name(@Valid @RequestBody Name_request body){
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import com.example.quiz.custom_getters.GetCustomOptions;
 import com.example.quiz.dto.Options;
 import com.example.quiz.dto.Questions;
 import com.example.quiz.dto.Quiz;
+import com.example.quiz.dto.Results;
 import com.example.quiz.repository.Options_repo;
 import com.example.quiz.repository.Questions_repo;
 import com.example.quiz.repository.Quiz_repo;
@@ -80,7 +81,7 @@ public class Quiz_service {
     public ResponseEntity<SubmitTest_response> submitTest(SubmitTest_request body){
 
         String name = body.getName();
-        Long id = body.getTest_id();
+        Long quiz_id = body.getTest_id();
         Map<Long, Long> questions_answers = body.getQuestions_options();
 
         AtomicInteger correct_answers = new AtomicInteger();
@@ -95,9 +96,14 @@ public class Quiz_service {
 
         score = (float) 100 / (float) question_amount * correct_answers.floatValue();
 
-        System.out.println(score);
+        Results result = new Results(quiz_id, name, score);
 
+        try{
+            resultsRepo.save(result);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(new SubmitTest_response(name, "Unable to calculate or store result", score), HttpStatus.BAD_GATEWAY);
+        }
         return new ResponseEntity<>(new SubmitTest_response(name, null, score), HttpStatus.OK);
     }
-
 }
