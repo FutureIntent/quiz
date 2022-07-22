@@ -1,14 +1,8 @@
 package com.example.quiz.service;
 
 import com.example.quiz.custom_getters.GetCustomOptions;
-import com.example.quiz.dto.Options;
-import com.example.quiz.dto.Questions;
-import com.example.quiz.dto.Quiz;
-import com.example.quiz.dto.Results;
-import com.example.quiz.repository.Options_repo;
-import com.example.quiz.repository.Questions_repo;
-import com.example.quiz.repository.Quiz_repo;
-import com.example.quiz.repository.Results_repo;
+import com.example.quiz.dto.*;
+import com.example.quiz.repository.*;
 import com.example.quiz.request.SubmitTest_request;
 import com.example.quiz.response.Options_response;
 import com.example.quiz.response.Questions_response;
@@ -22,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -37,7 +32,10 @@ public class Quiz_service {
     private Options_repo optionsRepo;
 
     @Autowired
-    Results_repo resultsRepo;
+    private Results_repo resultsRepo;
+
+    @Autowired
+    private Answers_repo answersRepo;
 
     public ResponseEntity<Quiz_response> getTests(){
 
@@ -49,7 +47,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Quiz_response("Unable to retrieve tests", tests), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Quiz_response(null, tests), HttpStatus.OK);
+        return new ResponseEntity<>(new Quiz_response("", tests), HttpStatus.OK);
     }
 
     public ResponseEntity<Questions_response> getQuestions(Long quiz_id){
@@ -62,7 +60,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Questions_response("Unable to retrieve questions", questions), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Questions_response(null, questions),HttpStatus.OK);
+        return new ResponseEntity<>(new Questions_response("", questions),HttpStatus.OK);
     }
 
     public ResponseEntity<Options_response> getOptions(Long question_id){
@@ -75,7 +73,7 @@ public class Quiz_service {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new Options_response("Unable to retrieve options", options), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Options_response(null, options), HttpStatus.OK);
+        return new ResponseEntity<>(new Options_response("", options), HttpStatus.OK);
     }
 
     public ResponseEntity<SubmitTest_response> submitTest(SubmitTest_request body){
@@ -99,11 +97,21 @@ public class Quiz_service {
         Results result = new Results(quiz_id, name, score);
 
         try{
-            resultsRepo.save(result);
+            Results stored_result = resultsRepo.save(result);
+
+            questions_answers.forEach((k, v) -> {
+                Optional<Options> option = optionsRepo.findById(v);
+
+                if(option.isEmpty()) return;
+
+                Answers answers = new Answers(stored_result, option.get());
+                answersRepo.save(answers);
+            });
+
         }catch(Exception e){
             System.out.println(e.getMessage());
             return new ResponseEntity<>(new SubmitTest_response(name, "Unable to calculate or store result", score), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new SubmitTest_response(name, null, score), HttpStatus.OK);
+        return new ResponseEntity<>(new SubmitTest_response(name, "", score), HttpStatus.OK);
     }
 }
