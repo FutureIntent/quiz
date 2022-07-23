@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/quiz")
@@ -49,7 +51,10 @@ public class Quiz_controller {
     @PostMapping(value = "/getName")
     public ResponseEntity get_name(@Valid @RequestBody Name_request body){
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Map<String,String> message = new HashMap<>();
+        message.put("message", "");
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     @PostMapping(value = "/submitTest")
