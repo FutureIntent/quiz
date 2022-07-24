@@ -1,13 +1,13 @@
 package com.example.quiz.service;
 
-import com.example.quiz.custom_getters.GetCustomOptions;
-import com.example.quiz.dto.*;
+import com.example.quiz.customGetters.GetCustomOptions;
+import com.example.quiz.entity.*;
 import com.example.quiz.repository.*;
-import com.example.quiz.request.SubmitTest_request;
-import com.example.quiz.response.Options_response;
-import com.example.quiz.response.Questions_response;
-import com.example.quiz.response.Quiz_response;
-import com.example.quiz.response.SubmitTest_response;
+import com.example.quiz.request.SubmitTestRequest;
+import com.example.quiz.response.OptionsResponse;
+import com.example.quiz.response.QuestionsResponse;
+import com.example.quiz.response.QuizResponse;
+import com.example.quiz.response.SubmitTestResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,24 +20,24 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
-public class Quiz_service {
+public class QuizService {
 
     @Autowired
-    private Quiz_repo quizRepo;
+    private QuizRepo quizRepo;
 
     @Autowired
-    private Questions_repo questionsRepo;
+    private QuestionsRepo questionsRepo;
 
     @Autowired
-    private Options_repo optionsRepo;
+    private OptionsRepo optionsRepo;
 
     @Autowired
-    private Results_repo resultsRepo;
+    private ResultsRepo resultsRepo;
 
     @Autowired
-    private Answers_repo answersRepo;
+    private AnswersRepo answersRepo;
 
-    public ResponseEntity<Quiz_response> getTests(){
+    public ResponseEntity<QuizResponse> getTests(){
 
         List<Quiz> tests = new ArrayList<Quiz>();
 
@@ -45,12 +45,12 @@ public class Quiz_service {
             tests = (List<Quiz>) quizRepo.findAll();
         }catch(Exception e){
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(new Quiz_response("Unable to retrieve tests", tests), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new QuizResponse("Unable to retrieve tests", tests), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Quiz_response("", tests), HttpStatus.OK);
+        return new ResponseEntity<>(new QuizResponse("", tests), HttpStatus.OK);
     }
 
-    public ResponseEntity<Questions_response> getQuestions(Long quiz_id){
+    public ResponseEntity<QuestionsResponse> getQuestions(Long quiz_id){
 
         List<Questions> questions= new ArrayList<Questions>();
 
@@ -58,12 +58,12 @@ public class Quiz_service {
             questions = questionsRepo.findQuizQuestions(quiz_id);
         }catch(Exception e){
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(new Questions_response("Unable to retrieve questions", questions), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new QuestionsResponse("Unable to retrieve questions", questions), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Questions_response("", questions),HttpStatus.OK);
+        return new ResponseEntity<>(new QuestionsResponse("", questions),HttpStatus.OK);
     }
 
-    public ResponseEntity<Options_response> getOptions(Long question_id){
+    public ResponseEntity<OptionsResponse> getOptions(Long question_id){
 
         List<GetCustomOptions> options = new ArrayList<>();
 
@@ -71,12 +71,12 @@ public class Quiz_service {
             options = optionsRepo.findQuestionOptions(question_id);
         }catch(Exception e){
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(new Options_response("Unable to retrieve options", options), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new OptionsResponse("Unable to retrieve options", options), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new Options_response("", options), HttpStatus.OK);
+        return new ResponseEntity<>(new OptionsResponse("", options), HttpStatus.OK);
     }
 
-    public ResponseEntity<SubmitTest_response> submitTest(SubmitTest_request body){
+    public ResponseEntity<SubmitTestResponse> submitTest(SubmitTestRequest body){
 
         String name = body.getName();
         Long quiz_id = body.getTest_id();
@@ -110,8 +110,8 @@ public class Quiz_service {
 
         }catch(Exception e){
             System.out.println(e.getMessage());
-            return new ResponseEntity<>(new SubmitTest_response(name, "Unable to calculate or store result", score), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(new SubmitTestResponse(name, "Unable to calculate or store result", score), HttpStatus.BAD_GATEWAY);
         }
-        return new ResponseEntity<>(new SubmitTest_response(name, "", score), HttpStatus.OK);
+        return new ResponseEntity<>(new SubmitTestResponse(name, "", score), HttpStatus.OK);
     }
 }

@@ -1,10 +1,10 @@
 package com.example.quiz.repository;
 
-import com.example.quiz.dto.Quiz;
+import com.example.quiz.entity.Results;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Quiz_repo extends CrudRepository<Quiz, Long> {
+public interface ResultsRepo extends CrudRepository<Results, Long> {
 
 }

@@ -1,8 +1,7 @@
-package com.example.quiz.dto;
+package com.example.quiz.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubmitTest_response {
+public class SubmitTestResponse {
     private String name;
     private String message;
     private float score;

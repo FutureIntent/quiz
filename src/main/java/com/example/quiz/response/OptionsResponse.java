@@ -1,6 +1,6 @@
 package com.example.quiz.response;
 
-import com.example.quiz.dto.Questions;
+import com.example.quiz.customGetters.GetCustomOptions;
 import lombok.*;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Questions_response {
+public class OptionsResponse {
     private String message;
-    private List<Questions> questions;
+    private List<GetCustomOptions> options;
 }

@@ -1,6 +1,4 @@
-package com.example.quiz.custom_getters;
-
-import com.example.quiz.dto.Questions;
+package com.example.quiz.customGetters;
 
 public interface GetCustomOptions {
     Long getOption_id();

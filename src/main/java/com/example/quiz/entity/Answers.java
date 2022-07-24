@@ -1,4 +1,4 @@
-package com.example.quiz.dto;
+package com.example.quiz.entity;
 
 import lombok.*;
 

@@ -1,6 +1,6 @@
 package com.example.quiz.response;
 
-import com.example.quiz.dto.Quiz;
+import com.example.quiz.entity.Quiz;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quiz_response {
+public class QuizResponse {
     private String message;
     private List<Quiz> tests;
 }
