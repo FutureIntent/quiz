@@ -13,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -74,6 +71,12 @@ public class QuizService {
             return new ResponseEntity<>(new OptionsResponse("Unable to retrieve options", options), HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(new OptionsResponse("", options), HttpStatus.OK);
+    }
+
+    public ResponseEntity< Map<String,String> > getName(){
+        Map<String,String> message = new HashMap<>();
+        message.put("message", "");
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 
     public ResponseEntity<SubmitTestResponse> submitTest(SubmitTestRequest body){
