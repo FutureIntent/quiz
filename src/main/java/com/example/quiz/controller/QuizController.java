@@ -47,7 +47,7 @@ public class QuizController {
     }
 
     @PostMapping(value = "/getName")
-    public ResponseEntity get_name(@Valid @RequestBody NameRequest body){
+    public ResponseEntity< Map<String,String> > get_name(@Valid @RequestBody NameRequest body){
 
         ResponseEntity< Map<String,String> > response = quizService.getName();
 
